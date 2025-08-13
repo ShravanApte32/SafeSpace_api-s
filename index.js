@@ -12,6 +12,11 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 // ================= CRUD APIs =================
 
 // Get all users
+
+app.get('/', async (req, res) => {
+    res.status(200).json({ message: 'Hello world' });
+    console.log("Hello...");
+})
 app.get('/api/users', async (req, res) => {
     try {
         const { data, error } = await supabase.from('users').select('*');
