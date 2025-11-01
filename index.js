@@ -35,8 +35,7 @@ app.get('/api/users/:id', async (req, res) => {
     const { data, error } = await supabase
       .from('users')
       .select('*')
-      .eq('id', id)
-      .single();  // <— this ensures you get one object instead of an array
+      .eq('id', id);
 
     if (error) throw error;
     res.json(data);
