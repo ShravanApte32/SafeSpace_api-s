@@ -30,18 +30,20 @@ app.get('/api/users', async (req, res) => {
 
 // Get user by ID
 app.get('/api/users/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const { data, error } = await supabase
-            .from('users')
-            .select('*')
-            .eq('id', id)
-        if (error) throw error;
-        res.json(data);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Server error' });
-    }
+  const id = parseInt(req.params.id);
+  try {
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', id)
+      .single();  // <— this ensures you get one object instead of an array
+
+    if (error) throw error;
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 // Create a new user
